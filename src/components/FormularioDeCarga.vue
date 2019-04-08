@@ -1,25 +1,37 @@
 <template>
-  <div>
-    <h1 class="display-3">Carga de Dados</h1>
-    <div>
-      <v-btn color="success" @click="$refs.arquivoCSV.click()">
-        <v-icon>cloud_upload</v-icon>
+  <v-card elevation="0" :color="appColor">
+    <v-card-actions>
+      <v-btn :loading="loading" :disabled="loading" color="blue-grey" class="white--text"
+             @click="$refs.arquivoCSV.click()">
         Upload
+        <v-icon right dark>cloud_upload</v-icon>
       </v-btn>
       <input v-show="false" name="arquivoCSV" ref="arquivoCSV" type="file"
              @change="carregarArquivoCSV($event.target.files)" accept="text/csv">
-    </div>
-  </div>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
+  import {mapState, mapGetters, mapActions} from 'vuex'
   import converter from 'json-2-csv'
 
   export default {
     name: "FormularioDeCarga",
-    computed: {},
+    computed: {
+      ...mapGetters({
+        appColor: 'appColor'
+      }),
+    },
+    data() {
+      return {
+        loading: false,
+        items: null,
+      }
+    },
     methods: {
       carregarArquivoCSV(files) {
+        this.loading = true;
         console.log(files);
         let fileContent = '';
         if (files.length > 0) {
@@ -28,6 +40,7 @@
           reader.onload = () => {
             fileContent = reader.result;
             this.converterCSVparaJSON(fileContent);
+            this.loading = false;
           };
           reader.readAsText(file);
         }
@@ -38,6 +51,7 @@
           console.log(typeof json);
           console.log(json.length);
           console.log(json);
+          this.items = json
         })
       }
     },

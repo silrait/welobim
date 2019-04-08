@@ -2,14 +2,21 @@ const path = require('path')
 
 module.exports = {
   rootDir: path.resolve(__dirname, '../../'),
+  testEnvironment: 'node',
+  verbose: true,
+  testURL: "http://localhost:8080/",
   moduleFileExtensions: [
     'js',
     'json',
     'vue'
   ],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^vue$': 'vue/dist/vue.common.js'
   },
+  testPathIgnorePatterns: [
+    '<rootDir>/test/e2e'
+  ],
   transform: {
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
     '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest'
