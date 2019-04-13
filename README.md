@@ -1,6 +1,6 @@
 # welobim
 
-> A Vue.js project
+> A Vue + Vuex + Vue-router + Vuetify CRUD frontend with an Python Django REST framework backend. For the backend: https://github.com/silrait/welobim-backend
 
 ## Build Setup
 
